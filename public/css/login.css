@@ -31,6 +31,7 @@
 /*-----------------------------------*\
   #BASE
 \*-----------------------------------*/
+@import url(./base.css);
 
 
 
@@ -41,3 +42,159 @@
   #TYPOGHRAPHY
 \*-----------------------------------*/
 @import url(./typography.css);
+
+
+
+
+
+
+/*-----------------------------------*\
+  #REUSED STYLE
+\*-----------------------------------*/
+.img-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+:has(> .state-layer) {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.state-layer {
+    position: absolute;
+    background-color: var(--state-layer-bg);
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--tr-duration-short-2) var(--tr-easing-linear);
+
+}
+
+:has(> .state-layer):hover>.state-layer {
+    opacity: 0.08;
+}
+
+:has(> .state-layer):is(:focus, :focus-visible, :focus-within, :active)>.state-layer {
+    opacity: 0.12;
+}
+
+.link {
+    display: inline-block;
+}
+
+.link:where(:hover, :focus-visible) {
+    text-decoration: underline;
+}
+
+.link-primary {
+    color: var(--primary);
+}
+
+
+
+
+/*-----------------------------------*\
+  #COMPONENT
+\*-----------------------------------*/
+.btn {
+    max-width: max-content;
+    min-width: max-content;
+    height: 40px;
+    margin-inline: auto;
+    margin-block-start: var(--space-4);
+    padding-inline: var(--space-6);
+
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    border-radius: var(--radius-full);
+
+    background-color: var(--primary);
+    color: var(--on-primary);
+    --state-layer-bg: var(--on-primary);
+    transition: box-shadow var(--tr-duration-short-2) var(--tr-easing-linear);
+
+}
+
+.btn:hover:not(:focus) {
+    box-shadow: var(--shadow-1);
+}
+
+
+
+
+/*-----------------------------------*\
+  #MAIN
+\*-----------------------------------*/
+.login-page {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    padding: var(--space-2);
+    gap: var(--space-2);
+
+}
+
+:where(.banner, .content) {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-extra-large);
+    overflow: hidden;
+}
+
+.content {
+    background-image: url(/images/login-bg-pattern.png);
+    background-repeat: no-repeat;
+    background-size: 200%;
+    background-position: center;
+    padding: var(--space-6);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+
+
+
+
+
+/*-----------------------------------*\
+  #MEDIA QUERIES
+\*-----------------------------------*/
+
+/**
+ * responsive for larger than 768px screen
+ */
+
+@media (min-width: 768px) {
+
+    .title {
+        font-size: var(--fs-display-medium);
+        line-height: var(--lh-display-medium);
+        letter-spacing: var(--ls-n-025);
+    }
+
+    .btn {
+        margin-block-start: var(--space-8);
+    }
+}
+
+/**
+ * responsive for larger than 1200px screen
+ */
+
+@media (min-width: 1200px) {
+    
+    .login-page {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+}
