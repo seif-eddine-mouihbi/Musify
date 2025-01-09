@@ -3,46 +3,46 @@
  * @copyright Seif Eddine Mouihbi 2024
  */
 
-'use strict'
+'use strict';
 
 /**
  * node modules
  */
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 /**
  * custom modules
  */
-const login = require('./src/routes/login.route')
+const login = require('./src/routes/login.route');
 
 //Initial express app
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
 /**
  * EJS Setting
  */
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 
 
 /**
  * Setting static directory
  */
-app.use(express.static(`${__dirname}/public`))
+app.use(express.static(`${__dirname}/public`));
 
 /**
  * Enable cors & cookie parser
  */
-app.use(cors()).use(cookieParser())
+app.use(cors()).use(cookieParser());
 
 
 /**
  * Login Page
  */
-app.use('/login', login)
+app.use('/login', login);
 
 
 app.listen(8080, () => {
     console.log(`Server Listening at http://localhost:8080`);
-})
+});
