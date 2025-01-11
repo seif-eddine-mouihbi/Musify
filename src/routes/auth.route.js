@@ -14,8 +14,10 @@ const router = require("express").Router();
 /**
  * custom modules
  */
-const { login } = require("../controllers/login.controller");
+const { auth, callback } = require("../controllers/auth.controller");
 
-router.get("/", login);
+router.get("/", auth);
+
+router.get('/callback', callback)
 
 module.exports = router;
