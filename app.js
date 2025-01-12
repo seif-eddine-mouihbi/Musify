@@ -16,6 +16,7 @@ const cookieParser = require('cookie-parser');
  */
 const login = require('./src/routes/login.route');
 const auth = require('./src/routes/auth.route')
+const authenticatedUser = require('./src/middlewares/auth_user.middleware')
 
 //Initial express app
 const express = require('express');
@@ -47,6 +48,11 @@ app.use('/login', login);
  * Auth page
  */
 app.use('/auth',auth)
+
+/**
+ * check user is authenticated
+ */
+app.use(authenticatedUser)
 
 
 app.listen(8080, () => {

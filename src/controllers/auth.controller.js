@@ -47,7 +47,18 @@ const callback = async (req, res) => {
     res.clearCookie(apiConfig.STATE_KEY);
     const response = await getToken(code);
     if (response.status === 200) {
-      console.log(response.data);
+
+      // console.log(response.data); // Debuging
+
+      const { access_token, refresh_token, expires_in } = response.data;
+
+      res.cookie("access_token", access_token, {
+        maxAge: expires_in * MILLISECONDS,
+      });
+      res.cookie("refresh_token", refresh_token, { maxAge: ONE_WEEK });
+      res.redirect("/");
+    } else {
+      res.redirect("/login");
     }
   }
 };
