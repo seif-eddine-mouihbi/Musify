@@ -8,9 +8,14 @@
 /**
  * custom modules
  */
+const userApi = require("../api/user.api");
 
-const home = (req, res) => {
-  res.render("./pages/home");
+const home = async (req, res) => {
+  // current user Profile
+  const currentProfile = await userApi.getProfile(req);
+  res.render("./pages/home", {
+    currentProfile
+  });
 };
 
 module.exports = { home };
