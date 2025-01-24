@@ -44,5 +44,13 @@
 
       <div class="state-layer"></div>
     </button>
+
+    <%- include('./menu') %>
   </div>
+
+  <%- include('./icon_btn', {
+    variant: 'clear',
+    icon: 'close',
+    dataAttr: 'data-search-clear'
+  }) %>
 </div>
