@@ -107,6 +107,25 @@
   border-width: 0;
 }
 
+.ripple {
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  border-radius: var(--radius-full);
+  opacity: 0.12;
+  filter: blur(20px);
+  animation: ripple 500ms var(--tr-easing-standard) forwards;
+}
+
+@keyframes ripple {
+  0% {
+    scale: 0;
+  }
+  100% {
+    scale: 2.5;
+  }
+}
+
 /*-----------------------------------*\
   #COMPONENTS
 \*-----------------------------------*/
@@ -234,16 +253,15 @@
   display: none;
 }
 
-
 /**
  * Menu
  */
 
- .menu-wrapper {
+.menu-wrapper {
   position: relative;
- }
+}
 
- .menu{
+.menu {
   position: absolute;
   top: 100%;
   right: 0;
@@ -252,24 +270,50 @@
   border-radius: var(--radius-extra-small);
   width: 160px;
   box-shadow: var(--shadow-2);
-  /* transform-origin: top right; */
+  transform-origin: top right;
   transform: scale(0.8);
   opacity: 0;
   visibility: hidden;
   transition: var(--tr-duration-short-4) var(--tr-easing-emphasized);
- }
+}
 
- .menu-wrapper.active .menu{
+.menu-wrapper.active .menu {
   transform: scale(1);
   opacity: 1;
   visibility: visible;
- }
+}
 
- .menu-item{
+.menu-item {
   padding-inline: var(--space-3);
   height: 48px;
   display: flex;
   align-items: center;
   color: var(--on-surface);
-  --state-layer-bg: var(--on-surface)
- }
+  --state-layer-bg: var(--on-surface);
+}
+
+/**
+  * Top Bar
+  */
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--top-bar-height);
+  background-image: var(--top-bar-gradient);
+  padding-inline: var(--space-4);
+  display: flex;
+  align-items: center;
+  transition: var(--tr-duration-short-4) var(--tr-easing-emphasized);
+  z-index: 4;
+}
+
+.header-hide .top-bar {
+  transform: translateY(-100%);
+}
+
+.top-bar > .icon-btn {
+  display: none;
+}
