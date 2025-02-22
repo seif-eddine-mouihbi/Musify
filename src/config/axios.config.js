@@ -53,6 +53,8 @@ const getData = async (apiUrl, access_token) => {
           Authorization: `Bearer ${access_token}`,
         },
       });
+    // console.log(response); Debugging
+
     return response;
   } catch (error) {
     console.log(error);
