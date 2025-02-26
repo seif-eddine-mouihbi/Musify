@@ -3,7 +3,7 @@
 'album', text: 'Albums' }, { href: '/playlist' , icon: 'queue_music' , text:
 'Playlist' } ] %>
 
-<nav class="bottom_nav">
+<nav class="bottom-nav">
   <a href="/" class="logo bottom-nav-item">
     <div class="icon-wrapper">
       <img
@@ -20,8 +20,25 @@
         width="94"
         height="24"
       />
+      <p class="bottom-nav-text label-medium">Musify</p>
+    </div>
+  </a>
+
+  <% navItems.forEach(({href, icon, text}) => { %>
+  <a
+    href="<%=href%>"
+    class="bottom-nav-item <%=locals.currentRoute === href ? 'active' : ''%>"
+    data-bottom-nav_item
+  >
+    <div class="icon-wrapper">
+      <span class="material-symbols-rounded icon"> <%=icon%> </span>
+
+      <div class="indicator"></div>
+      <div class="state-layer"></div>
     </div>
 
-    <p class="bottom-nav-text label-medium">Musify</p>
+    <p class="bottom-nav-text label-medium"><%=text%></p>
   </a>
+
+  <% }); %>
 </nav>
