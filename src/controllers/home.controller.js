@@ -22,22 +22,20 @@ const home = async (req, res) => {
   const recentlyPlayedTracks = recentlyPlayed.items.map(({ track }) => track);
 
   // recommanded albums
-  const trackIds =  recentlyPlayedTracks.map(({ id }) => id);
-  const trackSeed =  trackIds.slice(0, 5).join(",");
-  // console.log(trackIds);
-  
+  const trackIds = recentlyPlayedTracks.map(({ id }) => id);
+  const trackSeed = trackIds.slice(0, 5).join(",");
+
+  // There is bug in this request
   const recommendedAlbums = await trackApi.getRecommendedTrack(
     req,
     trackSeed,
     apiConfig.LOW_LIMIT
   );
-  
-
   // console.log(recommendedAlbums);
 
   res.render("./pages/home", {
     currentProfile,
-    // recommendedAlbums
+    recommendedAlbums,
   });
 };
 

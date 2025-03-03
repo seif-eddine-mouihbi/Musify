@@ -22,6 +22,8 @@ const { getData } = require("../config/axios.config");
  * @returns {Object}
  */
 
+// There is Bug In The API Request with endpoint Recommendations the status code is 404
+// This bug is not of our work but is on the Spotify API
 const getRecommendedTrack = async (req, trackSeed, itemLimit) => {
   const {
     data: { tracks: recommendedTracks },
@@ -30,10 +32,9 @@ const getRecommendedTrack = async (req, trackSeed, itemLimit) => {
     req.cookies.access_token
   );
 
-  // Bug 
-  console.log(recommendedTracks);
+  // console.log(recommendedTracks);
 
-  // return data;
+  return recommendedTracks;
 };
 
 module.exports = { getRecommendedTrack };

@@ -34,7 +34,7 @@ const STATE_KEY = "spotify_auth_state";
 
 // Api request queries
 const MARKET = "US";
-const LOW_LIMIT = 5;
+const LOW_LIMIT = 10;
 const DEFAULT_LIMIT = 28;
 
 module.exports = {
