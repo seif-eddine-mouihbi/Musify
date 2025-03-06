@@ -9,7 +9,6 @@
  * node modules
  */
 const axios = require("axios");
-const queryString = require("querystring");
 
 /**
  * custom modules

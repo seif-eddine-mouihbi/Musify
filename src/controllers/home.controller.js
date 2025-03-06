@@ -8,10 +8,9 @@
 /**
  * custom modules
  */
-const apiConfig = require("../config/api.config");
 const userApi = require("../api/user.api");
 const playerApi = require("../api/player.api");
-const trackApi = require("../api/track.api");
+const albumApi = require("../api/album.api");
 
 const home = async (req, res) => {
   // current user Profile
@@ -21,17 +20,21 @@ const home = async (req, res) => {
   const recentlyPlayed = await playerApi.getRecentPlayed(req);
   const recentlyPlayedTracks = recentlyPlayed.items.map(({ track }) => track);
 
-  // recommanded albums
+  // recommanded tracks
   const trackIds = recentlyPlayedTracks.map(({ id }) => id);
-  const trackSeed = trackIds.slice(0, 5).join(",");
+  // console.log(trackIds);
 
-  // There is bug in this request
-  const recommendedAlbums = await trackApi.getRecommendedTrack(
-    req,
-    trackSeed,
-    apiConfig.LOW_LIMIT
-  );
+  // recommended Albums
+  const recentlyPlayedAlbums = recentlyPlayedTracks.map(({ album }) => album);
+  const albumIds = recentlyPlayedAlbums
+    .map(({ id }) => id)
+    .slice(0, 10)
+    .join(",");
+  // console.log(albumIds);
+
+  const recommendedAlbums = await albumApi.getRecommendedAlbums(req, albumIds);
   // console.log(recommendedAlbums);
+
 
   res.render("./pages/home", {
     currentProfile,
