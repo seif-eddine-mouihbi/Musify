@@ -1,5 +1,5 @@
-<% const { url = `/images/${locals.type}-banner.png`, width = 300, height = 300 }
-= locals.image ?? {} %>
+<% const { url=`/images/${locals.type}-banner.png`, width=300, height=300
+}=locals.image ?? {} %>
 
 <div
   class="card <%= locals.variant %>"
@@ -17,8 +17,25 @@
         data-image-load-anim
       />
     </figure>
+    <%- include('./play_btn', {variant: 'filled' , dataAttr: `data-uri="${locals.uri}"`}) %>
+  </div>
 
-    <%- include('./play-btn', {variant: 'filled', dataAttr: `data-uri"${locals.uri}"`}) %>
+  <div class="card-content">
+    <h3 class="title-medium card-title ellipsis-one-line"><%= locals.albumTitle %></h3>
+
+    <span class="body-medium card-text has-separator ellipsis-two-line">
+
+      <% if (locals.year) { %>
+      <span> <%= locals.year %> </span>
+      <div class="separator"></div>
+      <% } %> 
+      
+      <%- locals.artistName %>
+    </span>
 
   </div>
+
+  <a href="<%= locals.link %>" class="card-link" aria-label="<%= locals.title %>"></a>
+  <div class="state-layer"></div>
+
 </div>
