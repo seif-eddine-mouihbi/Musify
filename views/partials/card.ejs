@@ -3,7 +3,7 @@
 
 <div
   class="card <%= locals.variant %>"
-  title="<%= locals.albumTitle %>"
+  title="<%= locals.name %>"
   data-ripple
 >
   <div class="card-banner">
@@ -12,16 +12,17 @@
         src="<%= url %>"
         width="<%= width %>"
         height="<%= height %>"
-        alt="<%= locals.albumTitle %>"
+        alt="<%= locals.name %>"
         class="img-cover"
         data-image-load-anim
+        loading="lazy"
       />
     </figure>
     <%- include('./play_btn', {variant: 'filled' , dataAttr: `data-uri="${locals.uri}"`}) %>
   </div>
 
   <div class="card-content">
-    <h3 class="title-medium card-title ellipsis-one-line"><%= locals.albumTitle %></h3>
+    <h3 class="title-medium card-title ellipsis-one-line"><%= locals.name %></h3>
 
     <span class="body-medium card-text has-separator ellipsis-two-line">
 
@@ -30,12 +31,12 @@
       <div class="separator"></div>
       <% } %> 
       
-      <%- locals.artistName %>
+      <%- locals.text %>
     </span>
 
   </div>
 
-  <a href="<%= locals.link %>" class="card-link" aria-label="<%= locals.title %>"></a>
+  <a href="<%= locals.link %>" class="card-link" aria-label="<%= locals.name %>"></a>
   <div class="state-layer"></div>
 
 </div>

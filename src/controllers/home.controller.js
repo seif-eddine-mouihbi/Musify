@@ -3,14 +3,15 @@
  * @copyright Seif Eddine Mouihbi 2024
  */
 
-"use strict";
+'use strict';
 
 /**
  * custom modules
  */
-const userApi = require("../api/user.api");
-const playerApi = require("../api/player.api");
-const albumApi = require("../api/album.api");
+const userApi = require('../api/user.api');
+const playerApi = require('../api/player.api');
+const albumApi = require('../api/album.api');
+const artistApi = require('../api/artist.api');
 
 const home = async (req, res) => {
   // current user Profile
@@ -29,16 +30,24 @@ const home = async (req, res) => {
   const albumIds = recentlyPlayedAlbums
     .map(({ id }) => id)
     .slice(0, 10)
-    .join(",");
+    .join(',');
   // console.log(albumIds);
 
   const recommendedAlbums = await albumApi.getRecommendedAlbums(req, albumIds);
-  // console.log(recommendedAlbums);
+  // console.log( recommendedAlbums);
 
+  // recommended artists
+  const artistIdEntries = recommendedAlbums.map(({ artists }) => artists[0].id);
+  const uniqueArtistIds = [...new Set(artistIdEntries.flat(1))].join(',');
+  const recommendedArtist = await artistApi.getSeveralDetail(
+    req,
+    uniqueArtistIds
+  );
 
-  res.render("./pages/home", {
+  res.render('./pages/home', {
     currentProfile,
     recommendedAlbums,
+    recommendedArtist,
   });
 };
 

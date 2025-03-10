@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,20 +17,20 @@
       <div class="main">
         <!-- RECOMMENDED ALBUM -->
         <% if (locals.recommendedAlbums.length) { %>
-        <section class="section new-release">
+        <section class="section">
           <div class="title-wrapper">
             <h2 class="title-large section-title">Recommend for you</h2>
           </div>
-          <div class="slider" data-slider>
+          <div class="slider">
             <div class="slider-inner">
-              <% locals.recommendedAlbums.forEach(({artists, images, name: albumTitle, id, uri}) => { %>
+              <% locals.recommendedAlbums.forEach(({artists, images, name, id, uri}) => { %>
                   <%                  
-                    const artistName = artists.map(({name})=> name).join(',')
+                    const text = artists.map(({name})=> name).join(',')
                     const image = images.find(item => item.width === 300)                    
                   %>
 
                   <%- include('../partials/card', {
-                    image, type: 'album', albumTitle, artistName, link: `/album/${id}`, uri
+                    image, type: 'album', name, text, link: `/album/${id}`, uri
                     }) 
                   %>
 
@@ -36,6 +38,33 @@
             </div>
           </div>
         </section>
+        <% } %>
+
+        <!-- RECOMMENDED ARTISTS -->
+        <% const {artists : recommendedArtistItems} = locals.recommendedArtist %>
+
+        <% if (recommendedArtistItems.length) { %>
+
+          <section class="section">
+            <div class="title-wrapper">
+              <h2 class="title-large section-title">Artist for you</h2>
+            </div>
+            <div class="slider">
+              <div class="slider-inner">
+                <% recommendedArtistItems.forEach(({name, type, images, id, uri}) => { %>
+
+                  <% const [image] = images || [] %>
+                  <%- include('../partials/card', {
+                    variant: 'artist-card',
+                    name,
+                    image,
+                    text: type,
+                    link: `/artist/${id}`
+                  }) %>
+              <% }); %>
+              </div>
+            </div>
+          </section>
         <% } %>
       </div>
     </article>

@@ -3,38 +3,38 @@
  * @copyright Seif Eddine Mouihbi 2024
  */
 
-"use strict";
+'use strict';
 
 /**
  * Custom Module
  */
 
-import { addEventOnElements } from "./utils.js";
+import { addEventOnElements } from './utils.js';
 
 /**
  * Search clear functionality
  */
 
 const /** {HTMLElement} */ $searchField = document.querySelector(
-    "[data-search-field]"
+    '[data-search-field]'
   );
 const /** {HTMLElement} */ $searchClear = document.querySelector(
-    "[data-search-clear]"
+    '[data-search-clear]'
   );
 
-$searchClear?.addEventListener("click", function () {
-  $searchField.value = "";
+$searchClear?.addEventListener('click', function () {
+  $searchField.value = '';
 });
 
 /**
  * Logo Animate in mobile
  */
 
-const /** {HTMLElement} */ $logo = document.querySelector("[data-logo]");
+const /** {HTMLElement} */ $logo = document.querySelector('[data-logo]');
 
-if (!sessionStorage.getItem("logoAnimated")) {
-  $logo.classList.add("animate");
-  sessionStorage.setItem("logoAnimated", true);
+if (!sessionStorage.getItem('logoAnimated')) {
+  $logo.classList.add('animate');
+  sessionStorage.setItem('logoAnimated', true);
 }
 
 /**
@@ -42,29 +42,29 @@ if (!sessionStorage.getItem("logoAnimated")) {
  */
 
 const /** {HTMLElement} */ $menuWrapper = document.querySelector(
-    "[data-menu-wrapper]"
+    '[data-menu-wrapper]'
   );
 const /** {HTMLElement} */ $menuToggler = document.querySelector(
-    "[data-menu-toggler]"
+    '[data-menu-toggler]'
   );
 
-$menuToggler?.addEventListener("click", function () {
-  $menuWrapper.classList.toggle("active");
+$menuToggler?.addEventListener('click', function () {
+  $menuWrapper.classList.toggle('active');
 });
 
 /**
  * Hide top bar on scroll down
  */
 
-const /** {HTMLElement} */ $page = document.querySelector("[data-page]");
+const /** {HTMLElement} */ $page = document.querySelector('[data-page]');
 
 let /** {number} */ lastScrollPosition = 0;
 
-$page?.addEventListener("scroll", function () {
+$page?.addEventListener('scroll', function () {
   if (lastScrollPosition < this.scrollTop) {
-    this.classList.add("header-hide");
+    this.classList.add('header-hide');
   } else {
-    this.classList.remove("header-hide");
+    this.classList.remove('header-hide');
   }
   lastScrollPosition = this.scrollTop;
 });
@@ -74,11 +74,11 @@ $page?.addEventListener("scroll", function () {
  */
 
 const ripple = function ($rippleElement) {
-  $rippleElement.addEventListener("pointerdown", function (event) {
+  $rippleElement.addEventListener('pointerdown', function (event) {
     event.stopImmediatePropagation();
 
-    const /** {HTMLElement} */ $ripple = document.createElement("div");
-    $ripple.classList.add("ripple");
+    const /** {HTMLElement} */ $ripple = document.createElement('div');
+    $ripple.classList.add('ripple');
     this.appendChild($ripple);
 
     const removeRipple = () => {
@@ -86,7 +86,7 @@ const ripple = function ($rippleElement) {
         {
           opacity: 0,
         },
-        { fill: "forwards", duration: 200 }
+        { fill: 'forwards', duration: 200 }
       );
 
       setTimeout(() => {
@@ -94,8 +94,8 @@ const ripple = function ($rippleElement) {
       }, 1000);
     };
 
-    this.addEventListener("pointerup", removeRipple);
-    this.addEventListener("pointerleave", removeRipple);
+    this.addEventListener('pointerup', removeRipple);
+    this.addEventListener('pointerleave', removeRipple);
 
     const /** {number} */ rippleSize = Math.max(
         this.clientWidth,
@@ -110,7 +110,58 @@ const ripple = function ($rippleElement) {
 };
 
 const /** {HTMLElement} */ $rippleElement =
-    document.querySelectorAll("[data-ripple]");
+    document.querySelectorAll('[data-ripple]');
 $rippleElement?.forEach((item) => {
   ripple(item);
 });
+
+/**
+ * Image animation on loading
+ */
+
+window.addEventListener('DOMContentLoaded', function () {
+  const /** {Array<HTMLElement>} */ $animatedImages = document.querySelectorAll(
+      '[data-image-load-anim]'
+    );
+
+  const addAnimation = function () {
+    this.animate(
+      {
+        opacity: 1,
+      },
+      {
+        duration: 200,
+        fill: 'forwards',
+      }
+    );
+  };
+
+  $animatedImages.forEach(($image) => {
+    $image.style.opacity = 0;
+
+    if ($image.complete) {
+      addAnimation.call($image);
+    } else {
+      $image.addEventListener('load', addAnimation);
+    }
+  });
+});
+
+/**
+ * Bottom nav item active
+ */
+
+const /** {Array<HTMLElement>} */ $bottomNavItems = document.querySelectorAll(
+    '[data-bottom-nav_item]'
+  );
+
+const /** {HTMLElement} */ $activeBottomNavItem = document.querySelector(
+    '[data-bottom-nav_item].active'
+  );
+
+const activeNavItem = function () {
+  $activeBottomNavItem?.classList.remove('active');
+  this.classList.add('active');
+};
+
+$bottomNavItems && addEventOnElements($bottomNavItems, 'click', activeNavItem);
