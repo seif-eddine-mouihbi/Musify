@@ -3,13 +3,14 @@
  * @copyright Seif Eddine Mouihbi 2024
  */
 
-"use strict";
+'use strict';
 
 /**
  * custom modules
  */
 
-const { getData } = require("../config/axios.config");
+const { getData } = require('../config/axios.config');
+const { getUrlQuery } = require('../utils/helpers.util');
 
 /**
  * Recommendations are generated based on the available information for a given seed entity
@@ -21,17 +22,35 @@ const { getData } = require("../config/axios.config");
  * @returns {Object}
  */
 
-// There is Bug In The API Request with endpoint Recommendations the status code is 404
-// This bug is not of our work but is on the Spotify API
 const getRecommendedAlbums = async (req, id) => {
   try {
     const {
-      data: { albums: recommendedAlbum }
-    } = await getData(`/albums?ids=${id}`, req.cookies.access_token);    
+      data: { albums: recommendedAlbum },
+    } = await getData(`/albums?ids=${id}`, req.cookies.access_token);
     return recommendedAlbum;
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = { getRecommendedAlbums };
+/**
+ * Get a list of new album releases featured in spotify
+ *
+ * @param {Object} req - server request object
+ * @param {number} itemLimit - the maximum number of items to return. default: 20
+ * @returns {Object}
+ */
+const getNewRelease = async (req, itemLimit) => {
+  const { limit, offset, page } = getUrlQuery(req.params, itemLimit);
+
+  const {
+    data: { albums: newRelease },
+  } = await getData(
+    `/browse/new-releases?limit=${limit}&offset=${offset}`,
+    req.cookies.access_token
+  );
+
+  return { baseUrl: req.baseUrl, page, ...newRelease };
+};
+
+module.exports = { getRecommendedAlbums, getNewRelease };

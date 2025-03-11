@@ -66,6 +66,47 @@
             </div>
           </section>
         <% } %>
+        
+        <!-- NEW RELEASE ALBUMS -->
+        
+        <% const {items: newReleaseItem, next: newReleaseNext} = locals.newRelease %>
+
+        <section class="section">
+          <div class="title-wrapper">
+            <h2 class="title-large section-title">New Releases</h2>
+
+            <% if (newReleaseNext!== null) { %>
+              <a href="/albums" class="btn btn-liink" data-ripple>
+                <span class="label-large">See all</span>
+                <div class="state-layer"></div>
+              </a>
+            <% } %>
+          </div>
+          <div class="slider">
+            <div class="slider-inner">
+
+              <% newReleaseItem.forEach(({id, images, name, artists, uri}) => { %>
+
+                  <%  
+                    const text = artists.map(({name})=> name).join(',')
+                    const image = images.find(item => item.width === 300)
+                  %>
+
+                  <%- include('../partials/card', {
+                    image,
+                    type: 'album',
+                    name,
+                    text,
+                    link: `/album/${id}`
+                  })
+                  %>
+                
+              <% }) %>
+            
+            </div>
+          </div>
+        </section>
+
       </div>
     </article>
   </body>

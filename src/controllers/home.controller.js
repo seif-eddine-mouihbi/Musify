@@ -8,10 +8,12 @@
 /**
  * custom modules
  */
+const apiConfig = require('../config/api.config')
 const userApi = require('../api/user.api');
 const playerApi = require('../api/player.api');
 const albumApi = require('../api/album.api');
 const artistApi = require('../api/artist.api');
+const playlistApi = require('../api/playlist.api')
 
 const home = async (req, res) => {
   // current user Profile
@@ -44,10 +46,18 @@ const home = async (req, res) => {
     uniqueArtistIds
   );
 
+  // new release album
+  const newRelease = await albumApi.getNewRelease(req, apiConfig.DEFAULT_LIMIT)
+  // console.log(newRelease);
+  
+  // top playList
+  const featuredPlaylist = await playlistApi.getCategoriePlaylist(req, apiConfig.DEFAULT_LIMIT)
+
   res.render('./pages/home', {
     currentProfile,
     recommendedAlbums,
     recommendedArtist,
+    newRelease
   });
 };
 
